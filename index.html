@@ -4398,7 +4398,7 @@ input:checked + .slider:before {
     <!-- ==================== 写信窗口 ==================== -->
     <div id="letterWritePanel" style="background: rgba(255,255,255,0.4); border-radius: 14px; padding: 16px; border: 1px solid rgba(138,127,141,0.2);">
       <p style="font-size:0.85rem; margin-bottom:15px; color:var(--text);">
-        给对方写一封信，对方会在4小时内随机时间回复。回复内容从普通字卡中随机抽取，至少15个字卡，每个字卡之间用句号隔开。
+        给对方写一封信，对方会在4小时内随机时间回复。回复内容从普通字卡中随机抽取，至少15个、最多30个字卡，每个字卡之间用句号隔开。
       </p>
       
       <textarea class="tarot-textarea" id="letterContentTextarea" placeholder="在这里写下你想对对方说的话...
@@ -4406,7 +4406,7 @@ input:checked + .slider:before {
       
       <div class="tarot-info" style="margin-bottom:10px;">
         <span>已输入: <span id="letterCharCount">0</span> 字</span>
-        <span>回复字卡数量: 至少15个</span>
+        <span>回复字卡数量: 15~30个</span>
       </div>
       
       <div style="display: flex; gap: 8px;">
@@ -4422,7 +4422,7 @@ input:checked + .slider:before {
         <strong>💡 温馨提示：</strong><br>
         • 发送后4小时内对方会随机回复<br>
         • 回复内容从普通字卡中随机抽取<br>
-        • 最少回复15个字卡<br>
+        • 回复字卡数量为15~30个（不足15个则全部使用）<br>
         • 每个字卡之间用句号（。）隔开<br>
         • 回复会显示在聊天界面和收信箱中
       </div>
@@ -10106,9 +10106,9 @@ triggerLetterReply() {
         return;
     }
     
-    // 随机抽取字卡，最少15个，如果字卡总数不足15则全部使用
+    // 随机抽取字卡，最少15个（不足则全部使用），最多30个
     const minCount = Math.min(15, phrases.length);
-    const maxCount = phrases.length;
+    const maxCount = Math.min(30, phrases.length);
     const actualCount = minCount + Math.floor(Math.random() * (maxCount - minCount + 1));
     
     // 随机抽取不重复的字卡
